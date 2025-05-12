@@ -71,50 +71,62 @@ async function runScript(scriptName, automated = false) {
   }
 }
 
+// async function runAllScriptsSequentially() {
+//   const scriptOrder = ["rubic", "magma", "izumi", "apriori", "beanswap"];
+  
+//   console.log("-".repeat(60));
+//   console.log("Đang ở chế độ tự động chạy lần lượt");
+//   console.log("-".repeat(60));
+  
+//   const response = await prompts([
+//     {
+//       type: 'number',
+//       name: 'cycles',
+//       message: 'How many cycles would you like to run for each script?',
+//       initial: 1
+//     },
+//     {
+//       type: 'number',
+//       name: 'intervalHours',
+//       message: 'Run interval in hours (0 for no repetition):',
+//       initial: 0
+//     }
+//   ]);
+  
+//   for (const script of scriptOrder) {
+//     scriptConfigs[script].cycles = response.cycles || 1;
+//     scriptConfigs[script].intervalHours = response.intervalHours > 0 ? response.intervalHours : null;
+//   }
+  
+//   for (let i = 0; i < scriptOrder.length; i++) {
+//     const scriptName = scriptOrder[i];
+//     console.log(`\n[${i + 1}/${scriptOrder.length}] Bắt đầu chạy ${scriptName.toUpperCase()}...`);
+    
+//     await runScript(scriptName, true);
+    
+//     if (i < scriptOrder.length - 1) {
+//       console.log(`\nĐã chạy xong ${scriptName.toUpperCase()}. Chờ 5 giây trước khi tiếp tục...`);
+//       await delay(5000);
+//     } else {
+//       console.log(`\nĐã chạy xong ${scriptName.toUpperCase()}.`);
+//     }
+//   }
+  
+//   console.log("-".repeat(60));
+//   console.log("Đã chạy xong tất cả");
+//   console.log("-".repeat(60));
+// }
+// Hàm chạy lần lượt các script (cải tiến)
 async function runAllScriptsSequentially() {
   const scriptOrder = ["rubic", "magma", "izumi", "apriori", "beanswap"];
-  
-  console.log("-".repeat(60));
-  console.log("Đang ở chế độ tự động chạy lần lượt");
-  console.log("-".repeat(60));
-  
-  const response = await prompts([
-    {
-      type: 'number',
-      name: 'cycles',
-      message: 'How many cycles would you like to run for each script?',
-      initial: 1
-    },
-    {
-      type: 'number',
-      name: 'intervalHours',
-      message: 'Run interval in hours (0 for no repetition):',
-      initial: 0
-    }
-  ]);
-  
+  console.log("Chế độ tự động chạy lần lượt");
+
   for (const script of scriptOrder) {
-    scriptConfigs[script].cycles = response.cycles || 1;
-    scriptConfigs[script].intervalHours = response.intervalHours > 0 ? response.intervalHours : null;
+    await runScript(script, true);
+    console.log("-".repeat(60));
+    console.log(`Đã chạy xong ${script}`);
+    console.log("-".repeat(60));
   }
-  
-  for (let i = 0; i < scriptOrder.length; i++) {
-    const scriptName = scriptOrder[i];
-    console.log(`\n[${i + 1}/${scriptOrder.length}] Bắt đầu chạy ${scriptName.toUpperCase()}...`);
-    
-    await runScript(scriptName, true);
-    
-    if (i < scriptOrder.length - 1) {
-      console.log(`\nĐã chạy xong ${scriptName.toUpperCase()}. Chờ 5 giây trước khi tiếp tục...`);
-      await delay(5000);
-    } else {
-      console.log(`\nĐã chạy xong ${scriptName.toUpperCase()}.`);
-    }
-  }
-  
-  console.log("-".repeat(60));
-  console.log("Đã chạy xong tất cả, follow Dân Cày Airdrop nhé anh em!");
-  console.log("-".repeat(60));
 }
 
 async function run() {
