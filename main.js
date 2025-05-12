@@ -129,29 +129,34 @@ async function runAllScriptsSequentially() {
   }
 }
 
+// async function run() {
+//   const response = await prompts({
+//     type: "select",
+//     name: "script",
+//     message: "Chọn bất kì để bắt đầu chạy:",
+//     choices: availableScripts,
+//   });
+
+//   const selectedScript = response.script;
+
+//   if (!selectedScript) {
+//     console.log("Không có tập lệnh nào được chọn. Dừng bot...");
+//     return;
+//   }
+
+//   if (selectedScript === "all") {
+//     await runAllScriptsSequentially();
+//   } else if (selectedScript === "exit") {
+//     console.log("Dừng bot...");
+//     process.exit(0);
+//   } else {
+//     await runScript(selectedScript);
+//   }
+// }
+
+// Hàm khởi động tự động cải tiến
 async function run() {
-  const response = await prompts({
-    type: "select",
-    name: "script",
-    message: "Chọn bất kì để bắt đầu chạy:",
-    choices: availableScripts,
-  });
-
-  const selectedScript = response.script;
-
-  if (!selectedScript) {
-    console.log("Không có tập lệnh nào được chọn. Dừng bot...");
-    return;
-  }
-
-  if (selectedScript === "all") {
-    await runAllScriptsSequentially();
-  } else if (selectedScript === "exit") {
-    console.log("Dừng bot...");
-    process.exit(0);
-  } else {
-    await runScript(selectedScript);
-  }
+  await runAllScriptsSequentially();
 }
 
 run().catch((error) => {
